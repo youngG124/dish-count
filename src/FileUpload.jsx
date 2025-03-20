@@ -1,26 +1,38 @@
 import { useState } from "react";
+import "./FileUpload.css"; // 스타일 파일 분리
 
-export default function FileUpload() {
-  const [file, setFile] = useState(null);
-  const [preview, setPreview] = useState(null);
+function FileUpload() {
+  const [image, setImage] = useState(null); // 업로드된 이미지 상태 저장
 
   // 파일 선택 핸들러
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-      setPreview(URL.createObjectURL(selectedFile)); // 이미지 미리보기
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setImage(URL.createObjectURL(file)); // 선택한 이미지 미리보기
     }
   };
 
+  // 드롭존 클릭 시 파일 선택창 열기
+  const handleBoxClick = () => {
+    document.getElementById("fileInput").click();
+  };
+
   return (
-    <div style={{ textAlign: "center", marginTop: "20px" }}>
-      <input type="file" accept="image/*" onChange={handleFileChange} />
-      {preview && (
-        <div>
-          <img src={preview} alt="미리보기" width="200" />
-        </div>
+    <div className="upload-box" onClick={handleBoxClick}>
+      {image ? (
+        <img src={image} alt="미리보기" className="preview-image" />
+      ) : (
+        <p className="upload-text">클릭하여 이미지 업로드</p>
       )}
+      <input
+        type="file"
+        id="fileInput"
+        accept="image/*"
+        onChange={handleFileChange}
+        hidden
+      />
     </div>
   );
 }
+
+export default FileUpload;
