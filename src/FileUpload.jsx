@@ -22,7 +22,7 @@ function FileUpload() {
       {image ? (
         <img src={image} alt="미리보기" className="preview-image" />
       ) : (
-        <p className="upload-text">클릭하여 이미지 업로드</p>
+        <p className="upload-text">click to upload image</p>
       )}
       <input
         type="file"
